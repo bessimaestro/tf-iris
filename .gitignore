@@ -3,6 +3,8 @@
 .idea/tf-iris.iml
 .idea/vcs.xml
 .idea/workspace.xml
+logs/
+eval/
 dataset/iris-test.csv
 dataset/iris-training.csv
 logs/eval/events.out.tfevents.1530598690.nextbit
