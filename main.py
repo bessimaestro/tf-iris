@@ -33,7 +33,9 @@ def input_fn(file_path: str, shuffle: bool=False, repeat_count=1):
         d = dict(zip(feature_names, features)), label
         return d
 
-    dataset = (tf.data.TextLineDataset(file_path).skip(1).map(decode_csv))
+    dataset = (tf.data.TextLineDataset(file_path)
+               .skip(1)
+               .map(decode_csv, num_parallel_calls=os.cpu_count()))
     if shuffle:
         dataset = dataset.shuffle(buffer_size=256, seed=42)
     dataset = dataset.repeat(repeat_count)
@@ -50,7 +52,7 @@ def predict_input_fn():
         return dict(zip(feature_names, x))
 
     dataset = tf.data.Dataset.from_tensor_slices(prediction_input)
-    dataset = dataset.map(decode)
+    dataset = dataset.map(decode, num_parallel_calls=os.cpu_count())
     iterator = dataset.make_one_shot_iterator()
     next_feature_batch = iterator.get_next()
     return next_feature_batch, None
