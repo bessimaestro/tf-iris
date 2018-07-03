@@ -1,0 +1,15 @@
+.idea/misc.xml
+.idea/modules.xml
+.idea/tf-iris.iml
+.idea/vcs.xml
+.idea/workspace.xml
+dataset/iris-test.csv
+dataset/iris-training.csv
+logs/eval/events.out.tfevents.1530598690.nextbit
+logs/model.ckpt-120.meta
+logs/model.ckpt-120.index
+logs/model.ckpt-120.data-00000-of-00001
+logs/model.ckpt-1.index
+logs/model.ckpt-1.meta
+logs/model.ckpt-1.data-00000-of-00001
+logs/graph.pbtxt

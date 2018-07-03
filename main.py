@@ -85,12 +85,12 @@ if __name__ == '__main__':
     classifier.train(input_fn=lambda: input_fn(file_train, True, 32))
     evaluate_result = classifier.evaluate(input_fn=lambda: input_fn(file_test, False, 1))
 
-    # print("Evaluation results:")
+    print("Evaluation results:")
     for key, val in evaluate_result.items():
         print("{}: {}".format(key, val))
 
     predict_results = classifier.predict(input_fn=lambda: input_fn(file_test, False, 1))
-    # print("Predictions on test file")
+    print("Predictions on test file")
     for prediction in predict_results:
         print(prediction['class_ids'][0])
 
