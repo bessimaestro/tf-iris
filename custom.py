@@ -1,7 +1,7 @@
 import os
 import glob
 import shutil
-import typing
+from typing import Tuple, Dict, List
 import six.moves.urllib.request as request
 import tensorflow as tf
 
@@ -13,7 +13,7 @@ url_test = 'http://download.tensorflow.org/data/iris_test.csv'
 logdir = os.path.join(path, 'logs')
 
 
-def download_dataset(url: str, file: str):
+def download_dataset(url: str, file: str) -> None:
     if not os.path.exists(os.path.join(path, 'dataset')):
         os.mkdir(os.path.join(path, 'dataset'))
 
@@ -23,7 +23,9 @@ def download_dataset(url: str, file: str):
             f.write(data)
 
 
-def input_fn(file_path: str, repeat_count=1, shuffle_count=1):
+def input_fn(file_path: str,
+             repeat_count: int = 1,
+             shuffle_count: int = 1) -> Tuple:
 
     def decode_csv(line: str):
         parsed_line = tf.decode_csv(line, record_defaults=[[0.], [0.], [0.], [0.], [0]])
@@ -35,10 +37,10 @@ def input_fn(file_path: str, repeat_count=1, shuffle_count=1):
 
     dataset = (tf.data.TextLineDataset(file_path)
         .skip(1)
-        .map(decode_csv, num_parallel_calls=os.cpu_count())\
-        .shuffle(buffer_size=shuffle_count, seed=42)\
-        .repeat(repeat_count)\
-        .batch(32)\
+        .map(decode_csv, num_parallel_calls=os.cpu_count())
+        .shuffle(buffer_size=shuffle_count, seed=42)
+        .repeat(repeat_count)
+        .batch(32)
         .prefetch(1))
 
     iterator = dataset.make_one_shot_iterator()
@@ -46,7 +48,9 @@ def input_fn(file_path: str, repeat_count=1, shuffle_count=1):
     return batch_features, batch_labels
 
 
-def model_fn(features, labels, mode):
+def model_fn(features: Dict,
+             labels: List,
+             mode: tf.estimator.ModeKeys) -> tf.estimator.EstimatorSpec:
 
     if mode == tf.estimator.ModeKeys.PREDICT:
         tf.logging.info("model_fn: PREDICT, {}".format(mode))

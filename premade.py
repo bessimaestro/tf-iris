@@ -1,7 +1,7 @@
 import os
 import glob
 import shutil
-import typing
+from typing import Tuple, Dict, List
 import six.moves.urllib.request as request
 import tensorflow as tf
 
@@ -13,7 +13,7 @@ url_test = 'http://download.tensorflow.org/data/iris_test.csv'
 logdir = os.path.join(path, 'logs')
 
 
-def download_dataset(url: str, file: str):
+def download_dataset(url: str, file: str) -> None:
     if not os.path.exists(os.path.join(path, 'dataset')):
         os.mkdir(os.path.join(path, 'dataset'))
 
@@ -23,9 +23,11 @@ def download_dataset(url: str, file: str):
             f.write(data)
 
 
-def input_fn(file_path: str, shuffle: bool=False, repeat_count=1):
+def input_fn(file_path: str,
+             shuffle: bool = False,
+             repeat_count: int = 1) -> Tuple[Dict, List]:
 
-    def decode_csv(line: str):
+    def decode_csv(line: str) -> Tuple:
         parsed_line = tf.decode_csv(line, record_defaults=[[0.], [0.], [0.], [0.], [0]])
         label = parsed_line[-1]
         del parsed_line[-1]
@@ -45,7 +47,7 @@ def input_fn(file_path: str, shuffle: bool=False, repeat_count=1):
     return batch_features, batch_labels
 
 
-def predict_input_fn():
+def predict_input_fn() -> Tuple[Tuple, None]:
 
     def decode(x):
         x = tf.split(x, 4)
