@@ -27,7 +27,7 @@ def input_fn(file_path: str,
              repeat_count: int = 1,
              shuffle_count: int = 1) -> Tuple:
 
-    def decode_csv(line: str):
+    def decode_csv(line: str) -> Tuple:
         parsed_line = tf.decode_csv(line, record_defaults=[[0.], [0.], [0.], [0.], [0]])
         label = parsed_line[-1]
         del parsed_line[-1]
