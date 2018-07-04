@@ -117,13 +117,13 @@ if __name__ == '__main__':
     tf.logging.info("...done classifier.train")
 
     tf.logging.info("Before classifier.evaluate")
-    evaluate_result = classifier.evaluate(input_fn=lambda: input_fn(file_train, 4))
+    evaluate_result = classifier.evaluate(input_fn=lambda: input_fn(file_test, 4))
     tf.logging.info("...done classifier.evauate")
     for key, value in evaluate_result.items():
         tf.logging.info("{} {}".format(key, value))
 
     tf.logging.info("Before classifier.predict")
-    predict_result = classifier.predict(input_fn=lambda: input_fn(file_train, 4))
+    predict_result = classifier.predict(input_fn=lambda: input_fn(file_test, 4))
     tf.logging.info("...done classifier.predict")
     for prediction in predict_result:
         tf.logging.info("...{}".format(prediction['class_ids']))
