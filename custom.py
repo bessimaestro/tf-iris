@@ -123,7 +123,7 @@ if __name__ == '__main__':
         tf.logging.info("{} {}".format(key, value))
 
     tf.logging.info("Before classifier.predict")
-    predict_result = classifier.predict(input_fn=lambda: input_fn(file_test, 4))
+    predict_result = classifier.predict(input_fn=lambda: input_fn(file_test, 1))
     tf.logging.info("...done classifier.predict")
     for prediction in predict_result:
         tf.logging.info("...{}".format(prediction['class_ids']))
